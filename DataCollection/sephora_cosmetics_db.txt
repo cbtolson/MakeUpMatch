@@ -1,0 +1,84 @@
+######################################
+#create database
+######################################
+
+drop database sephora_cosmetics;
+
+create database sephora_cosmetics;
+
+use sephora_cosmetics;
+
+CREATE TABLE Product (
+    product_id int NOT NULL AUTO_INCREMENT,
+    name varchar(255) NOT NULL, 
+    brand varchar(255) NOT NULL, 
+    type varchar(255) NOT NULL, 
+    url varchar(255) NOT NULL,
+    PRIMARY KEY(product_id),
+    UNIQUE KEY product_unique (name, brand)
+);
+
+CREATE TABLE Ingredients (
+    ingredient_id int NOT NULL AUTO_INCREMENT,
+    ingredient_name varchar(255) NOT NULL, 
+    alt_names varchar(255) NOT NULL, 
+    function varchar(255) NOT NULL, 
+    PRIMARY KEY(ingredient_id)
+);
+
+
+CREATE TABLE Reviews (
+    review_id int NOT NULL AUTO_INCREMENT, 
+    product_id int NOT NULL, 
+    review varchar(255) NOT NULL,
+    reviewer varchar(255) NOT NULL,
+    PRIMARY KEY(review_id),
+    FOREIGN KEY(product_id) REFERENCES Product(product_id),
+    UNIQUE KEY review_unique (product_id, review)
+);
+
+CREATE TABLE Product_Ingredient (
+    product_id int NOT NULL, 
+    ingredient_name varchar(255) NOT NULL,
+    PRIMARY KEY(product_id,ingredient_name),
+    FOREIGN KEY(product_id) REFERENCES Product(product_id),
+    UNIQUE KEY pi_unique (product_id, ingredient_name)
+);
+
+
+######################################
+#curate database
+######################################
+DELETE From Product_Ingredient WHERE product_id not in (SELECT product_id FROM Reviews);
+
+DELETE From Product WHERE product_id not in (SELECT product_id FROM Product_Ingredient );
+
+DELETE FROM Product_Ingredient where ingredient_name like '%variation_type%';
+
+
+######################################
+#link ingredients and products
+######################################
+ALTER TABLE Product_Ingredient DROP ingredient_id;
+ALTER TABLE Product_Ingredient ADD ingredient_id int AFTER ingredient_name;
+
+UPDATE Product_Ingredient AS PINNER JOIN Ingredients AS I
+ON (CONCAT('%',I.alt_names,'%') LIKE CONCAT('%',P.ingredient_name,'%') AND CHAR_LENGTH(I.alt_names)>2) OR CONCAT('%',I.ingredient_name,'%') LIKE CONCAT('%',P.ingredient_name,'%')
+SET P.ingredient_id = I.ingredient_id;
+
+UPDATE Product_Ingredient AS PINNER JOIN Ingredients AS I
+ON CONCAT('%',P.ingredient_name,'%') LIKE CONCAT('%',I.ingredient_name,'%')
+SET P.ingredient_id = I.ingredient_id;
+
+UPDATE Product_Ingredient AS PINNER JOIN Ingredients AS I
+ON (CONCAT('%',P.ingredient_name,'%') LIKE CONCAT('%',I.alt_names,'%') AND CHAR_LENGTH(I.alt_names)>2)
+SET P.ingredient_id = I.ingredient_id;
+
+UPDATE Product_Ingredient AS PINNER JOIN Ingredients AS I
+ON P.ingredient_name LIKE CONCAT('%',I.ingredient_name,'%') OR (P.ingredient_name LIKE CONCAT('%',I.alt_names,'%') AND CHAR_LENGTH(I.alt_names)>2)
+SET P.ingredient_id = I.ingredient_id;
+
+UPDATE Product_Ingredient AS PINNER JOIN Ingredients AS I
+ON P.ingredient_name = I.ingredient_name OR (P.ingredient_name = I.alt_names AND CHAR_LENGTH(I.alt_names)>2)
+SET P.ingredient_id = I.ingredient_id;
+

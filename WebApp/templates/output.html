@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Make-Up Match: Recommendations</title>
+
+    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i" rel="stylesheet"> -->
+    
+    <!-- Animate.css -->
+    <link href='{{ url_for('static', filename='css/animate.css') }}' rel='stylesheet' type='text/css'>
+    <!-- Icomoon Icon Fonts-->
+    <link href='{{ url_for('static', filename='css/icomoon.css') }}' rel='stylesheet' type='text/css'>
+    <!-- Bootstrap  -->
+    <link href='{{ url_for('static', filename='css/bootstrap.css') }}' rel='stylesheet' type='text/css'>
+    <!-- Theme style  -->
+    <link href='{{ url_for('static', filename='css/style.css') }}' rel='stylesheet' type='text/css'>
+                    
+    <!-- Modernizr JS -->
+    
+    <script src='{{ url_for('static', filename='js/modernizr-2.6.2.min.js') }}'></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+     <script src="../static/js/respond.min.js"></script>
+     <![endif]-->
+</head>
+<style>
+    #footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+    .right {
+        float: right
+    }
+</style>
+<body>
+    
+    <div class="fh5co-loader"></div>
+    
+    <div id="page">
+        <nav class="fh5co-nav" role="navigation">
+            <div class="container">
+                <div class="fh5co-top-logo">
+                    <div id="fh5co-logo"><a href="{{ url_for('homepage') }}"  style="color:#7D0541">Make-Up Match</a></div>
+                </div>
+                <div class="fh5co-top-menu menu-1 text-left">
+                    <ul>
+                        <li><a href="{{ url_for('about') }}">About</a></li>
+                        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                </div>
+                <div class="fh5co-top-social menu-1 text-right">
+                    <ul class="fh5co-social">
+                        <li><a href="mailto:ctwoods05@gmail.com"><i class="icon-email"></i></a></li>
+                        <li><a href="https://www.github.com/cbtolson"><i class="icon-github"></i></a></li>
+                        <li><a href="https://www.linkedin.com/in/chanintolson"><i class="icon-linkedin"></i></a></li>
+                    </ul>
+                </div>
+                
+            </div>
+        </nav>
+        <br><br>
+        
+                        <div class="col-md-6 col-md-offset-3 col-md-push-2 text-center fh5co-heading">
+                        <h2  style="color:#7D0541">Recommendations</h2>
+                        <br><br>
+                        <a id="link0" href="">Link</a>
+                        <br><br>
+                        <a id="link1" href="">Link</a>
+                        <br><br>
+                        <a id="link2" href="">Link</a>
+                        <br><br>
+                        <a id="link3" href="">Link</a>
+                        <br><br>
+                        <a id="link4" href="">Link</a>
+                        <br><br>
+                        <a id="link5" href="">Link</a>
+                        <br><br>
+                        <a id="link6" href="">Link</a>
+                        <br><br>
+                        <a id="link7" href="">Link</a>
+                        <br><br>
+                        <a id="link8" href="">Link</a>
+                        <br><br>
+                        <a id="link9" href="">Link</a>
+                        <br><br>
+                
+            </div>
+            
+    
+    <div class="gototop js-top">
+        <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+    </div>
+    
+    <input type="hidden" id="imgs" value="{{ recs }}">
+    <input type="hidden" id="pgs" value="{{ refs }}">
+
+    <!-- Custom -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+        var recs_pgs = document.getElementById('recs').value;
+        var refs_pgs = document.getElementById('refs').value;
+                
+        //get links
+        var pgs = refs_pgs.concat(rec_pgs.split(','));
+                           
+        //update link
+        for(count = 0; count < pgs.length; count++){
+            str = 'link'+count;
+            var page = document.getElementById(str);
+            page.href = pgs[count];
+            page.innerHTML= pgs[count];
+        };
+                           
+        //update link
+        if(10>pgs.length){
+            for(count = 9; count >= pgs.length; count--){
+                str = 'link'+count;
+                var page = document.getElementById(str);
+                page.href = '';
+                page.innerHTML= '';
+            };
+        };
+                    
+    });
+    </script>
+    <!-- jQuery -->
+    <script src='{{ url_for('static', filename='js/jquery.min.js') }}'></script>
+    <!-- jQuery Easing -->
+    <script src='{{ url_for('static', filename='js/jquery.easing.1.3.js') }}'></script>
+    <!-- Bootstrap -->
+    <script src='{{ url_for('static', filename='js/bootstrap.min.js') }}'></script>
+    <!-- Waypoints -->
+    <script src='{{ url_for('static', filename='js/jquery.waypoints.min.js') }}'></script>
+    <!-- Main -->
+    <script src='{{ url_for('static', filename='js/main.js') }}'></script>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+

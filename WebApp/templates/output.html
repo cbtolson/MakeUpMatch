@@ -44,7 +44,7 @@
         <nav class="fh5co-nav" role="navigation">
             <div class="container">
                 <div class="fh5co-top-logo">
-                    <div id="fh5co-logo"><a href="{{ url_for('homepage') }}"  style="color:#7D0541">Make-Up Match</a></div>
+                    <div id="fh5co-logo"><a href="{{ url_for('homepage') }}"  style="color:#7D0541">MM Home</a></div>
                 </div>
                 <div class="fh5co-top-menu menu-1 text-left">
                     <ul>
@@ -66,6 +66,12 @@
                         <div class="col-md-6 col-md-offset-3 col-md-push-2 text-center fh5co-heading">
                         <h2  style="color:#7D0541">Recommendations</h2>
                         <br><br>
+                        Original Product:
+                        <br>
+                        <a id="ref0" href="">Link</a>
+                        <br><br>
+                        Recommendations:
+                        <br>
                         <a id="link0" href="">Link</a>
                         <br><br>
                         <a id="link1" href="">Link</a>
@@ -94,36 +100,32 @@
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
     
-    <input type="hidden" id="imgs" value="{{ recs }}">
-    <input type="hidden" id="pgs" value="{{ refs }}">
+    <input type="hidden" id="recs" value="{{ recs }}">
+    <input type="hidden" id="refs" value="{{ refs }}">
 
     <!-- Custom -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript">
     jQuery(document).ready(function() {
-        var recs_pgs = document.getElementById('recs').value;
+        //update reference
         var refs_pgs = document.getElementById('refs').value;
-                
-        //get links
-        var pgs = refs_pgs.concat(rec_pgs.split(','));
-                           
+        var page = document.getElementById('ref0');
+        
+        page.href = refs_pgs;
+        page.innerHTML = refs_pgs;
+        
+        //get recommendation links
+        var recs_pgs = document.getElementById('recs').value;
+        var pgs = recs_pgs.split(',');
+        
         //update link
         for(count = 0; count < pgs.length; count++){
             str = 'link'+count;
-            var page = document.getElementById(str);
+            page = document.getElementById(str);
             page.href = pgs[count];
             page.innerHTML= pgs[count];
         };
                            
-        //update link
-        if(10>pgs.length){
-            for(count = 9; count >= pgs.length; count--){
-                str = 'link'+count;
-                var page = document.getElementById(str);
-                page.href = '';
-                page.innerHTML= '';
-            };
-        };
                     
     });
     </script>

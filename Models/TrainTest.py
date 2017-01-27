@@ -29,7 +29,8 @@ class TrainTest():
                  "JOIN Product "
                  "ON Product.product_id=Reviews.product_id "
                  "GROUP BY reviewer "
-                 "HAVING COUNT(review)>1")
+                 "HAVING COUNT(review)>1"
+                 )
         cursor.execute(query)
 
         #clean data

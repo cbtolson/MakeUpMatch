@@ -28,7 +28,7 @@ class Products():
         #query products
         query = ("SELECT product_id "
                  "FROM Product "
-                 "WHERE brand='"+brand_name+"%' AND name='"+product_name+"%' ")
+                 "WHERE brand LIKE '"+brand_name+"%' AND name LIKE '"+product_name+"%' ")
         cursor.execute(query)
 
         #clean data
@@ -87,7 +87,7 @@ class Products():
         output = [x[0] for x in cursor]
         
         #return page urls
-        return output
+        return ','.join(output)
 
     ################################################
     #Function to get reference product data
@@ -102,7 +102,7 @@ class Products():
         cursor = cnx.cursor()
         
         #query products
-        query = ("SELECT img_url, url "
+        query = ("SELECT url "
                  "FROM Product "
                  "WHERE product_id = '"+product_id+"' "
                  )

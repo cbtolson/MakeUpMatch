@@ -22,7 +22,6 @@ CREATE TABLE Ingredients (
     ingredient_id int NOT NULL AUTO_INCREMENT,
     ingredient_name varchar(255) NOT NULL, 
     alt_names varchar(255) NOT NULL, 
-    function varchar(255) NOT NULL, 
     PRIMARY KEY(ingredient_id)
 );
 
@@ -49,9 +48,9 @@ CREATE TABLE Product_Ingredient (
 ######################################
 #curate database
 ######################################
-DELETE From Product_Ingredient WHERE product_id not in (SELECT product_id FROM Reviews);
+DELETE From Product WHERE product_id not in (SELECT product_id FROM Reviews);
 
-DELETE From Product WHERE product_id not in (SELECT product_id FROM Product_Ingredient );
+DELETE From Reviews WHERE product_id not in (SELECT product_id FROM Product_Ingredient );
 
 DELETE FROM Product_Ingredient where ingredient_name like '%variation_type%';
 

@@ -12,24 +12,22 @@ import pandas as pd
 app = Flask(__name__)
 
 #pre-load distances
-distances = pd.read_csv('static/data/dist_reviews_tfidf.csv', header=0)
+distances = pd.read_csv('static/data/dist_reviews.csv', header=0)
 
 #display output
 @app.route('/output')
-def output(imgs=None, pgs=None, ref_imgs=None, ref_pgs=None):
+def output(recs=None, refs=None):
 
     #restrict access
     if request.referrer is None:
         return render_template("403.html")
     
     #initialize variables
-    imgs = request.args.get('imgs')
-    pgs = request.args.get('pgs')
-    ref_imgs = request.args.get('ref_imgs')
-    ref_pgs = request.args.get('ref_pgs')
+    recs = request.args.get('recs')
+    refs = request.args.get('refs')
 
     #return output page
-    return render_template("output.html", imgs=imgs, pgs=pgs, ref_imgs=ref_imgs, ref_pgs=ref_pgs)
+    return render_template("output.html", recs=recs, refs=refs)
 
 #process products and ingredients
 @app.route('/process')

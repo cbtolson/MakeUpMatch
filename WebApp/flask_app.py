@@ -6,32 +6,18 @@ from scripts.forms import InputForm
 from scripts.recommender import Products as prod
 from scripts.recommender import Ingredients as ingr
 import pandas as pd
-
+from flask_jsglue import JSGlue
 
 #create Flask app
 app = Flask(__name__)
+JSGlue(app)
 
 #pre-load distances
 distances = pd.read_csv('static/data/dist_reviews.csv', header=0)
 
-#display output
-@app.route('/output')
-def output(recs=None, refs=None):
-
-    #restrict access
-    if request.referrer is None:
-        return render_template("403.html")
-    
-    #initialize variables
-    recs = request.args.get('recs')
-    refs = request.args.get('refs')
-
-    #return output page
-    return render_template("output.html", recs=recs, refs=refs)
-
 #process products and ingredients
-@app.route('/process')
-def process(product_id=None, ingred=None):
+@app.route('/output')
+def output(product_id=None, ingred=None):
     
     #restrict access
     if request.referrer is None:
@@ -50,7 +36,13 @@ def process(product_id=None, ingred=None):
     #find reference product
     reference = prod.getRef(product_id)
 
-    return redirect(url_for("output", recs=recommended, refs=reference))
+    #get graph
+    pids = [x['name'] for x in recommended]
+    rate = [x['rating'] for x in recommended]
+    graph = prod.getGraph(reference['name'], pids, rate)
+
+    #return output page
+    return render_template("output.html", reference=reference, recommended=recommended, graph=graph)
 
 #display homepage
 @app.route('/inputs', methods=('GET', 'POST'))
@@ -84,14 +76,10 @@ def inputs():
         ingred = ingr.findIngred(ingred_name)
         if ingred == False:
             return render_template("homepage.html", form=form, error="Sorry, we do not have that ingredient.")
-        
-        #go to process page
-        return redirect(url_for("process", product_id=product, ingred=ingred))
-        
-        
+
+        return redirect(url_for("output", product_id=product, ingred=ingred))
     else:
         return render_template("homepage.html", form=form, error=error)
-
 
 #display about
 @app.route('/about')

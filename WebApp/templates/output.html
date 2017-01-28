@@ -143,7 +143,7 @@
                         <div class="container">
                             
                             {% for rec in recommended %}
-                            <div class="column-left">
+                            <div class="column-left" style="margin-bottom:90px">
                                 <img id="im0" src="{{ url_for('static', filename='product_images/'+rec['id']+'.jpg') }}" height="100"/><br><br>
                                 <p class="bold" id="b0" style="font-size:small;margin-bottom:0px">{{ rec['brand'] }}</p>
                                 <p id="n0" style="font-size:small;margin-bottom:0px">{{ rec['name'] }}</p>
@@ -152,7 +152,7 @@
                                     <div class="empty-stars"></div>
                                     <div id="fs0" class="full-stars" style='width:{{ rec['rating'] }}'></div>
                                 </div><br><br>
-                                <a id="link0" href=""></a>
+                                <a id="link0" href="{{ rec['url'] }}">Find Product</a>
                             </div>
                             {% endfor %}
 

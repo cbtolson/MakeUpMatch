@@ -12,8 +12,10 @@ from flask_jsglue import JSGlue
 app = Flask(__name__)
 JSGlue(app)
 
+
 #pre-load distances
 distances = pd.read_csv('static/data/dist_reviews.csv', header=0)
+
 
 #process products and ingredients
 @app.route('/output')
@@ -29,6 +31,8 @@ def output(product_id=None, ingred=None):
 
     #drop ingredients
     dists = ingr.dropIngreds(ingred, distances)
+    if len(dists.index) == 0:
+        return render_template("soap.html")
 
     #find nearest products
     recommended = prod.getTop(product_id, dists)
@@ -43,6 +47,7 @@ def output(product_id=None, ingred=None):
 
     #return output page
     return render_template("output.html", reference=reference, recommended=recommended, graph=graph)
+
 
 #display homepage
 @app.route('/inputs', methods=('GET', 'POST'))
@@ -80,6 +85,17 @@ def inputs():
         return redirect(url_for("output", product_id=product, ingred=ingred))
     else:
         return render_template("homepage.html", form=form, error=error)
+
+
+#display soap
+@app.route('/soap')
+def soap():
+    #restrict access
+    if request.referrer is None:
+        return render_template("403.html")
+    
+    #return soap page
+    return render_template("soap.html")
 
 #display about
 @app.route('/about')

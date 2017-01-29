@@ -125,7 +125,10 @@
                         <h2  style="color:#7D0541">Recommendations</h2>
                         <br>
                         <font size="5">Original Product</font>
-                        <br><br><br>
+                        <br><br>
+                        <p style="font-size:small;margin-bottom:-55px;margin-top:0px;margin-left:325px">
+                        Hover to get the product name.<br>(Darker lines are for more similar products.)
+                        </p><br><br><br>
                         <div class="container">
                         <div class="column-ll">
                             <img id="ref_im0" src="{{ url_for('static', filename='product_images/'+reference['id']+'.jpg') }}" height="220"/><br><br>
@@ -134,7 +137,7 @@
                             <a id="ref_link0" href="{{ reference['url'] }}">Find Product</a><br>
                         </div>
                         <div class="column-rr">
-                            <svg id="fullviz" height="500" viewBox="0 0 500 500" preserveAspectRatio="xMaxYMax"></svg>
+                            <svg id="fullviz" height="400" viewBox="0 0 500 500" preserveAspectRatio="xMaxYMax"></svg>
                         </div>
                         </div>
                         <br>
@@ -196,7 +199,7 @@
         //Set up tooltip
         var tip = d3.tip()
             .attr('class', 'd3-tip')
-            .offset([-10, 0])
+            .offset([60, 0])
             .html(function (d) {
                 return  d.name + "</span>";
              })

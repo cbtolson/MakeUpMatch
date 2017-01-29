@@ -80,7 +80,7 @@ class Products():
     def getTop(product_id, distances):
         
         #initialize variables
-        top = 12
+        top = 13
         
         #check distances
         if len(distances.index) < 1:
@@ -179,32 +179,41 @@ class Ingredients():
     @staticmethod
     def findIngred(ingred_name):
         
+        #split ingredients
+        ingred_name = [x.strip() for x in ingred_name.split(',')]
+        output = []
+        
         #connect to mysql
         cnx = mysql.connector.connect(host='152.19.68.141', user='ctolson', password='ilaYOU5!', database='sephora_cosmetics')
         cursor = cnx.cursor()
         
-        #query products
-        query = ("SELECT distinct product_id "
-                 "FROM Product_Ingredient AS P "
-                 "JOIN Ingredients AS I "
-                 "ON P.ingredient_id = I.ingredient_id "
-                 "WHERE (P.ingredient_name LIKE '%"+ingred_name+"%' "
-                 "OR I.ingredient_name LIKE '%"+ingred_name+"%' "
-                 "OR I.alt_names LIKE '%"+ingred_name+"%') ")
-        cursor.execute(query)
+        for iname in ingred_name:
         
-        #clean data
-        output = [str(x[0]) for x in cursor]
+            #query products
+            query = ("SELECT distinct product_id "
+                     "FROM Product_Ingredient AS P "
+                     "JOIN Ingredients AS I "
+                     "ON P.ingredient_id = I.ingredient_id "
+                     "WHERE (P.ingredient_name LIKE '%"+iname+"%' "
+                     "OR I.ingredient_name LIKE '%"+iname+"%' "
+                     "OR I.alt_names LIKE '%"+iname+"%') ")
+            cursor.execute(query)
+        
+            #clean data
+            out = [str(x[0]) for x in cursor]
+        
+            #check if empty
+            if out == []:
+                return False
 
-        #check if empty
-        if output == []:
-            return False
-                 
+            #append output
+            output = output+out
+    
         #close mysql server
         cnx.close()
                      
         #return train and test sets
-        return ','.join(output)
+        return ','.join(np.unique(output))
 
 
     ################################################
@@ -217,6 +226,9 @@ class Ingredients():
         
         #split ingredients
         ids = [int(x) for x in product_ids.split(',')]
+        
+        if len(ids) == len(distances.index):
+            return pd.DataFrame({'A' : []})
     
         #get top distances
         dist = distances.loc[~distances["product_id"].isin(ids)]

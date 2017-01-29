@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Make-Up Match: Homepage</title>
+    <title>Make-Up Match: Recommendations</title>
 
     <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"> -->
     <!-- <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i" rel="stylesheet"> -->
@@ -44,7 +44,7 @@
         <nav class="fh5co-nav" role="navigation">
             <div class="container">
                 <div class="fh5co-top-logo">
-                    <div id="fh5co-logo"><a href="{{ url_for('homepage') }}" style="color:#7D0541">MM Home</a></div>
+                    <div id="fh5co-logo"><a href="{{ url_for('homepage') }}"  style="color:#7D0541">MM Home</a></div>
                 </div>
                 <div class="fh5co-top-menu menu-1 text-left">
                     <ul>
@@ -61,42 +61,48 @@
                 
             </div>
         </nav>
-        <br><br>
-        
-                    <center>
-                    <div class="fh5co-heading">
-                        <h2 id="main-title" style="color:#7D0541">Make-Up Match</h2>
-                        <p>find your favorite beauty products without a given allergens or toxins</p>
-                    <form method="POST" action="/inputs"  enctype="multipart/form-data">
-                        
-                        {% if error %}
-                        <font color="red" size="3">{{ error }}</font>
-                        {% endif %}
-                        <br>
-                        Brand Name<br>
-                        {{ form.brand_name() }}
+        <br><br><br>
+                            <center>
+                            <div class="fh5co-heading">
+                            <h2 style="color: #7D0541"><font size="6">Sorry, no matches were found in our database</font></h2>
                         <br><br>
-                        Product Name<br>
-                        {{ form.product_name() }}
-                        <br><br>
-                        Excluded Ingredient Name<br>
-                        <p style="font-size:small;margin-bottom:0px">(separate multiple ingredients by comma)</p>
-                        {{ form.ingred_name() }}
-                        <br><br>
-
-                    <center><font size=4.5><input type=submit value=Submit style="width:200px;height:50px;"></font></center>
-                    </div>
-                    </center>
-                    
-
-            {{ form.csrf_token }}
+                        <img id="soap" src="{{ url_for('static', filename='images/soap.png') }}" height="300"/><br><br>
+                
+                            </div>
+                            </center>
             
-
     
     <div class="gototop js-top">
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
     
+    <input type="hidden" id="imgs" value="{{ imgs }}">
+    <input type="hidden" id="pgs" value="{{ pgs }}">
+    <input type="hidden" id="ref_imgs" value="{{ imgs }}">
+    <input type="hidden" id="ref_pgs" value="{{ pgs }}">
+
+    <!-- Custom -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript">
+    jQuery(document).ready(function() {
+        var imgs_hid = document.getElementById('imgs').value;
+        var pgs_hid = document.getElementById('pgs').value;
+        var ref_imgs_hid = document.getElementById('ref_imgs').value;
+        var ref_pgs_hid = document.getElementById('ref_pgs').value;
+                
+        //get links
+        var pgs = pgs_hid.split(',');
+                           
+        //update link
+        for(count = 0; count < pgs.length; count++){
+            str = 'link'+count;
+            var page = document.getElementById(str);
+            page.href = pgs[count];
+            page.innerHTML= pgs[count];
+        };
+                    
+    });
+    </script>
     <!-- jQuery -->
     <script src='{{ url_for('static', filename='js/jquery.min.js') }}'></script>
     <!-- jQuery Easing -->
@@ -107,9 +113,11 @@
     <script src='{{ url_for('static', filename='js/jquery.waypoints.min.js') }}'></script>
     <!-- Main -->
     <script src='{{ url_for('static', filename='js/main.js') }}'></script>
+
+
+
 </body>
 </html>
-
 
 
 

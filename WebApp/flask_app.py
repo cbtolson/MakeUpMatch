@@ -78,13 +78,34 @@ def inputs():
             return render_template("homepage.html", form=form, error="Sorry, we do not have that product.")
         
         #query for ingredient
-        ingred = ingr.findIngred(ingred_name)
+        ingred = ingr.findIngred(ingred_name, product)
         if ingred == False:
             return render_template("homepage.html", form=form, error="Sorry, we do not have that ingredient.")
 
         return redirect(url_for("output", product_id=product, ingred=ingred))
     else:
         return render_template("homepage.html", form=form, error=error)
+
+
+#display homepage
+@app.route('/auto')
+def auto(brand_name=None, product_name=None, ingred_name=None):
+    #restrict access
+    if request.referrer is None:
+        return render_template("403.html")
+    
+    #initialize variables
+    brand_name = request.args.get('brand_name')
+    product_name = request.args.get('product_name')
+    ingred_name = request.args.get('ingred_name')
+    
+    #query for product
+    product = prod.findProduct(brand_name, product_name)
+    
+    #query for ingredient
+    ingred = ingr.findIngred(ingred_name, product)
+    
+    return redirect(url_for("output", product_id=product, ingred=ingred))
 
 
 #display soap
@@ -96,6 +117,11 @@ def soap():
     
     #return soap page
     return render_template("soap.html")
+
+#display about
+@app.route('/examples')
+def examples():
+    return render_template("examples.html")
 
 #display about
 @app.route('/about')

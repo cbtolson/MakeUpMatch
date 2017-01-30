@@ -106,6 +106,7 @@
                 <div class="fh5co-top-menu menu-1 text-left">
                     <ul>
                         <li><a href="{{ url_for('about') }}">About</a></li>
+                        <li><a href="{{ url_for('examples') }}">Examples</a></li>
                         <li><a href="{{ url_for('contact') }}">Contact</a></li>
                 </div>
                 <div class="fh5co-top-social menu-1 text-right">
@@ -219,7 +220,7 @@
             .enter().append("line")
             .attr("class", "link")
             .style("stroke-width", function (d) {
-                return Math.sqrt(d.value*20);
+                return 10**(d.value/100);
             });
                            
         //Create circles

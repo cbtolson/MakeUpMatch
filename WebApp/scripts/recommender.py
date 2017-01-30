@@ -80,7 +80,7 @@ class Products():
     def getTop(product_id, distances):
         
         #initialize variables
-        top = 13
+        top = 12
         
         #check distances
         if len(distances.index) < 1:
@@ -89,14 +89,14 @@ class Products():
             top = len(distances.index)
         
         #get top products
-        dist_sort = distances.sort_values(str(product_id))
+        dist_sort = distances.sort_values(str(product_id), ascending=False)
         dist = dist_sort.head(top)
         ids = dist["product_id"].tolist()
         ids = [str(x) for x in ids]
         product_ids = ','.join(ids)
         
         #get top distances
-        rate = [dist.ix[x,str(product_id)] for x in dist.index]
+        rate = [dist.ix[x,str(product_id)]*280 for x in dist.index]
         rating = [str("{0:.2f}".format(x))+'%' for x in rate]
         
         #connect to mysql
@@ -177,7 +177,7 @@ class Ingredients():
     #Output: product ids
     ################################################
     @staticmethod
-    def findIngred(ingred_name):
+    def findIngred(ingred_name, product):
         
         #split ingredients
         ingred_name = [x.strip() for x in ingred_name.split(',')]
@@ -188,15 +188,15 @@ class Ingredients():
         cursor = cnx.cursor()
         
         for iname in ingred_name:
-        
+
             #query products
             query = ("SELECT distinct product_id "
                      "FROM Product_Ingredient AS P "
                      "JOIN Ingredients AS I "
                      "ON P.ingredient_id = I.ingredient_id "
-                     "WHERE (P.ingredient_name LIKE '%"+iname+"%' "
+                     "WHERE P.ingredient_name LIKE '%"+iname+"%' "
                      "OR I.ingredient_name LIKE '%"+iname+"%' "
-                     "OR I.alt_names LIKE '%"+iname+"%') ")
+                     "OR I.alt_names LIKE '%"+iname+"%' ")
             cursor.execute(query)
         
             #clean data
@@ -207,7 +207,7 @@ class Ingredients():
                 return False
 
             #append output
-            output = output+out
+            output = output+out+[product]
     
         #close mysql server
         cnx.close()

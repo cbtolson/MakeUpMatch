@@ -25,9 +25,10 @@ class Products():
         
         #create nodes
         nodes = []
-        nodes.append({"name":str(ref), "group":1})
-        for id in pids:
-            nodes.append({"name":str(id), "group":2})
+        nodes.append({"name":str(ref), "group":0})
+        for i in range(0,len(pids)):
+            r = rate[i]
+            nodes.append({"name":pids[i], "group":float(r[:-1])})
         
         #create links
         links = []

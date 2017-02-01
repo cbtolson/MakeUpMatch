@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Make-Up Match: Examples</title>
+    <title>Make-Up Match: Homepage</title>
 
     <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"> -->
     <!-- <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i" rel="stylesheet"> -->
@@ -17,9 +17,7 @@
     <link href='{{ url_for('static', filename='css/bootstrap.css') }}' rel='stylesheet' type='text/css'>
     <!-- Theme style  -->
     <link href='{{ url_for('static', filename='css/style.css') }}' rel='stylesheet' type='text/css'>
-                    
     <!-- Modernizr JS -->
-    
     <script src='{{ url_for('static', filename='js/modernizr-2.6.2.min.js') }}'></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
@@ -34,10 +32,6 @@
     }
     .right {
         float: right
-    }
-    .centerTable {
-        margin-left: auto;
-        margin-right: auto;
     }
 </style>
 <body>
@@ -55,8 +49,6 @@
                         <li><a href="{{ url_for('about') }}">About</a></li>
                         <li><a href="{{ url_for('examples') }}">Examples</a></li>
                         <li><a href="{{ url_for('contact') }}">Contact</a></li>
-                    </ul>
-                        
                 </div>
                 <div class="fh5co-top-social menu-1 text-right">
                     <ul class="fh5co-social">
@@ -68,64 +60,49 @@
                 
             </div>
         </nav>
-        <br><br>
         
                     <center>
                     <div class="fh5co-heading">
-                        <h2 id="main-title" style="color:#7D0541">Popular Examples</h2>
-                        <br><br><br>
-                        <table class="centerTable" style="width:80%;text-align:center;" border="1">
-                            <tr>
-                                <td><b>Name</b></td>
-                                <td><b>Brand</b></td>
-                                <td><b>Ingredient</b></td>
-                            </tr>
-                            <tr>
-                                
-                                <td><a href="{{ url_for('auto', brand_name='Kat Von D', product_name='Lock-It Foundation', ingred_name='Glycerin') }}">
-                                    Lock-It Foundation
-                                </a></td>
-                                <td>Kat Von D</td>
-                                <td>Glycerin</td>
-                            </tr>
-                            <tr>
-                                <td><a href="{{ url_for('auto', brand_name='Sephora Collection', product_name='Cream Lip Stain', ingred_name='Tocopherol, Avocado') }}">
-                                    Cream Lip Stain
-                                </a></td>
-                                <td>Sephora Collection</td>
-                                <td>Tocopherol, Avocado</td>
-                            </tr>
-                            <tr>
-                                <td><a href="{{ url_for('auto', brand_name='Buxom', product_name='Lash Mascara', ingred_name='Iron Oxides CI 77491') }}">
-                                    Lash Mascara
-                                </a></td>
-                                <td>Buxom</td>
-                                <td>Iron Oxides CI 77491</td>
-                            </tr>
-                            <tr>
-                                <td><a href="{{ url_for('auto', brand_name='Living Proof', product_name='No Frizz Conditioner', ingred_name='Fragrance') }}">
-                                    No Frizz Conditioner
-                                </a></td>
-                                <td>Living Proof</td>
-                                <td>Fragrance</td>
-                            </tr>
-                            <tr>
-                                <td><a href="{{ url_for('auto', brand_name='Stila', product_name='Convertible Color', ingred_name='Red 22, Yellow 5') }}">
-                                    Convertible Color
-                                </a></td>
-                                <td>Stila</td>
-                                <td>Red 22, Yellow 5</td>
-                            </tr>
-                        </table>
-       
+                        <img id="hs" src="{{ url_for('static', filename='images/logo_mm.jpg') }}" height="420" style="margin-top:40px"/>
+                        <br>
+                        <font size="3"><a href="#bottom" style="margin-top:6px">BEGIN</a></font>
+                            <br><br><br><br><br><br><br><br><br>
+                        <p>find your favorite makeup without the allergens</p>
+                    <form method="POST" action="/inputs"  enctype="multipart/form-data">
+                        
+                        {% if error %}
+                        <font color="red" size="3">{{ error }}</font>
+                        {% endif %}
+                        <br>
+                        Brand Name
+                        <br>
+                        {{ form.brand_name() }}
+                        <br><br>
+                        Product Name
+                        <br>
+                        {{ form.product_name() }}
+                        <br><br>
+                        Excluded Ingredient Name<br>
+                        <p style="font-size:small;margin-bottom:0px">(separate multiple ingredients by comma)</p>
+                        {{ form.ingred_name() }}
+                        <br><br>
+
+                    <center><font size=4.5><input type=submit value=Submit style="width:200px;height:50px;"></font></center>
                     </div>
                     </center>
+                    
+
+            {{ form.csrf_token }}
+            
 
     
     <div class="gototop js-top">
         <a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
     </div>
     
+    <div id="bottom"><a href="bottom"></a>&nbsp;</div>
+
+        
     <!-- jQuery -->
     <script src='{{ url_for('static', filename='js/jquery.min.js') }}'></script>
     <!-- jQuery Easing -->

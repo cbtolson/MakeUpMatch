@@ -49,8 +49,12 @@ class Products():
     @staticmethod
     def findProduct(brand_name, product_name):
         
+        #process input
+        product_name = product_name.strip()
+        brand_name = brand_name.strip()
+        
         #connect to mysql
-        cnx = mysql.connector.connect(host='152.19.68.141', user='ctolson', password='ilaYOU5!', database='sephora_cosmetics')
+        cnx = mysql.connector.connect(host='localhost', user='ctolson', password='lDONTd5!', database='sephora_cosmetics')
         cursor = cnx.cursor()
         
         #query products

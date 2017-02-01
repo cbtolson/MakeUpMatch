@@ -71,21 +71,13 @@
                         </div>
                         </center>
                         <center>
-                        <br><br>
-                        
-                        
-                        <div class="container" style="margin-left:120px;margin-right:120px">
-                            <div class="column-ll">
-                                <img id="hs" src="{{ url_for('static', filename='images/ChaninWoods_Headshot.jpg') }}" height="300"/><br><br>
-                            </div>
-                            <div class="column-rr">
-                                <p align="justify" style="margin-left:5px;margin-right:120px">
+                                <img id="hs" src="{{ url_for('static', filename='images/ChaninWoods_Headshot.jpg') }}" height="250"/><br><br>
+
+                                <p align="justify" style="margin-left:120px;margin-right:120px">
                                 <br>
                                 Hello! My name is Chanin Woods and this is Make-up Match. I created this web application as part of the Insight Data Science Fellowship. I enjoy following beauty blogs and keeping up with the latest trends, but I also have allergies. I created Make-up Match to help me identify great products without my worst allergens. I used natural language processing and collaborative filtering techniques to identify similar products based on reviews. Then I filtered out the unwanted ingredients using exact and inexact SQL matches. The source code is available on <a href="https://www.github.com/cbtolson">Github</b></a>.
                                 </p>
-                            </div>
-                        </div>
-                        
+        
                         <br><br>
                         <b><font size="4">The Data</font></b>
                         <br>
@@ -96,13 +88,13 @@
                         <b><font size="4">The Algorithm</font></b>
                         <br>
                         <p align="justify" style="margin-left:120px;margin-right:120px">
-                        I processed the reviews using natural language processing. I stemmed and tokenized the reviews grouped by product. Using gensim I performed a tf-idf transformation to give heavier weight to rare words. I used latent semantic indexing to reduce the feature set from 51,000 features to 100 features. I then calculated the cosine similarity (cosine of the angle between topic vectors) for our set of products. This model successfully discriminated between the categories of make-up, but failed to pick up on nuanced differences between products. To improve this aspect of the algorithm, I used collaborative filtering. I created a user-item matrix for reviewers who had reviewed multiple items in our database. I performed sentiment analysis on the reviews to determine whether a reviewer liked or disliked that item. I then calculated the cosine similarity between products in the matrix. This determines "if someone likes product A and product B, then you may like product B as well." I found that this improved the discrimination between products within the same category. I combined the similarities in a linear combination. Finally, I filtered out the unwanted ingredients by finding exact and inexact matches using SQL queries.
+                        I processed the reviews using natural language processing. I stemmed and tokenized the reviews grouped by product. Using gensim I performed a tf-idf transformation to give heavier weight to rare words. I used latent semantic indexing to reduce the feature set from 51,000 features to 100 features. I then calculated the cosine similarity (cosine of the angle between topic vectors) for our set of products. This model successfully discriminated between the categories of make-up, but failed to pick up on nuanced differences between products. To improve this aspect of the algorithm, I used item-based collaborative filtering. I created a user-item matrix for reviewers who had reviewed multiple items in our database. I performed sentiment analysis on the reviews to determine whether a reviewer liked or disliked that item. I then calculated the cosine similarity between products in the matrix. This suggests items that were "Also Liked". I found that this improved the discrimination between products within the same category. I combined the similarities in a linear combination. Finally, I filtered out the unwanted ingredients by finding exact and inexact matches using SQL queries.
                         <br><br>
                         </p>
                         <b><font size="4">The Tools</font></b>
                         <br>
                         <p align="justify" style="margin-left:120px;margin-right:120px">
-                        The webapp backend was developed in Python using the following packages: BeautifulSoup, NLTK, pandas, gensim, mysql.connector, and Scikit-Learn. Data was stored in a MySQL database. The webapp frontend uses HTML, Flask, D3, and Javascript
+                        The webapp backend was developed in Python using the following packages: BeautifulSoup, NLTK, pandas, gensim, mysql.connector, and Scikit-Learn. Data was stored in a MySQL database. The webapp frontend uses HTML, Flask, D3, and Javascript. The web application is deployed on Amazon Web Services.
                         </p>
                         <br><br>
                         <br><br>

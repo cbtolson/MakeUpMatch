@@ -2,9 +2,9 @@
 #Functions for viewing html templates
 ##########################################################################################################
 from flask import Flask, render_template, request, redirect, url_for
-from scripts.forms import InputForm
-from scripts.recommender import Products as prod
-from scripts.recommender import Ingredients as ingr
+from flask_mm.scripts.forms import InputForm
+from flask_mm.scripts.recommender import Products as prod
+from flask_mm.scripts.recommender import Ingredients as ingr
 import pandas as pd
 from flask_jsglue import JSGlue
 
@@ -12,9 +12,8 @@ from flask_jsglue import JSGlue
 app = Flask(__name__)
 JSGlue(app)
 
-
 #pre-load distances
-distances = pd.read_csv('static/data/dist_reviews.csv', header=0)
+distances = pd.read_csv('flask_mm/static/data/dist_reviews.csv', header=0)
 
 
 #process products and ingredients

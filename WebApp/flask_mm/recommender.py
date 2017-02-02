@@ -105,7 +105,7 @@ class Products():
         rating = [str("{0:.2f}".format(x))+'%' for x in rate]
         
         #connect to mysql
-        cnx = mysql.connector.connect(host='152.19.68.141', user='ctolson', password='ilaYOU5!', database='sephora_cosmetics')
+        cnx = mysql.connector.connect(host='localhost', user='ctolson', password='lDONTd5!', database='sephora_cosmetics')
         cursor = cnx.cursor()
         
         #query products
@@ -138,7 +138,7 @@ class Products():
     def getRef(product_id):
         
         #connect to mysql
-        cnx = mysql.connector.connect(host='152.19.68.141', user='ctolson', password='ilaYOU5!', database='sephora_cosmetics')
+        cnx = mysql.connector.connect(host='localhost', user='ctolson', password='lDONTd5!', database='sephora_cosmetics')
         cursor = cnx.cursor()
         
         #query products
@@ -189,7 +189,7 @@ class Ingredients():
         output = []
         
         #connect to mysql
-        cnx = mysql.connector.connect(host='152.19.68.141', user='ctolson', password='ilaYOU5!', database='sephora_cosmetics')
+        cnx = mysql.connector.connect(host='localhost', user='ctolson', password='lDONTd5!', database='sephora_cosmetics')
         cursor = cnx.cursor()
         
         for iname in ingred_name:

@@ -2,9 +2,9 @@
 #Functions for viewing html templates
 ##########################################################################################################
 from flask import Flask, render_template, request, redirect, url_for
-from flask_mm.scripts.forms import InputForm
-from flask_mm.scripts.recommender import Products as prod
-from flask_mm.scripts.recommender import Ingredients as ingr
+from forms import InputForm
+from recommender import Products as prod
+from recommender import Ingredients as ingr
 import pandas as pd
 from flask_jsglue import JSGlue
 

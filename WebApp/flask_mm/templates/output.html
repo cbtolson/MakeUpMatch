@@ -219,7 +219,7 @@
             .data(graph.links)
             .enter().append("line")
             .attr("class", "link")
-            .style("stroke-width", function(d){ return(10**(d.value/100)) });
+            .style("stroke-width", 2);
                            
         //Create color scale
         var colorScale = d3.scale.linear()

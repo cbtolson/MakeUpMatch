@@ -20,7 +20,7 @@ class TrainTest():
     @staticmethod
     def getSet():
         #connect to mysql
-        cnx = mysql.connector.connect(host='152.19.68.141', user='ctolson', password='ilaYOU5!', database='sephora_cosmetics')
+        cnx = mysql.connector.connect(host='localhost', user='ctolson', password='ilaYOU5!', database='sephora_cosmetics')
         cursor = cnx.cursor()
 
         #query reviewers
